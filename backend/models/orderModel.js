@@ -1,4 +1,50 @@
-import mongoose from 'mongoose'
+import Sequelize from "sequelize";
+
+//  Order model.
+const Order =  {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    user: {
+        type: Sequelize.INTEGER,
+        required: true,
+        //ref: 'User'
+    },
+	shippingAddress: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+	paymentMethod: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    itemsPrice: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+	taxPrice: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    shippingPrice: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    totalPrice: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    orderItems: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+};
+
+export default Order
+
+/* import mongoose from 'mongoose'
 
 const orderSchema = mongoose.Schema({
     user: {
@@ -96,4 +142,4 @@ const orderSchema = mongoose.Schema({
 
 const Order = mongoose.model('Order', orderSchema)
 
-export default Order
+export default Order */

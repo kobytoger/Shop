@@ -25,13 +25,14 @@ const PlaceOrderScreen = ({ history }) => {
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
   ).toFixed(2);
+  cart.paymentMethod = "paypal"
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
 
   useEffect(() => {
     if (success) {
-      history.push(`order/${order._id}`);
+      history.push(`order/${order._id||order.id}`);
     }
     // eslint-disable-next-line
   }, [history, success]);
@@ -39,7 +40,7 @@ const PlaceOrderScreen = ({ history }) => {
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
-        orderItems: cart.orderItems,
+        orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
