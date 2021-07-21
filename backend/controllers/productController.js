@@ -9,7 +9,7 @@ import fbAdmin from 'firebase-admin';
 const getProducts = asyncHandler(async (req, res) => {
   try {
 
-    fbAdmin.initializeApp({
+    !fbAdmin.apps.length && fbAdmin.initializeApp({
       credential: fbAdmin.credential.cert({
         "type": "service_account",
         "project_id": "shopdemo-a2b23",
