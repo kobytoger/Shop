@@ -18,9 +18,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
   if (orderItems && orderItems.length === 0) {
     res.status(400);
     throw new Error("No order items");
-    //return;
   } else {
-
     //Parsing the incoming order
     var order = {
       user: req.user._id.toString(),
@@ -34,17 +32,10 @@ const addOrderItems = asyncHandler(async (req, res) => {
     };
 
     createOrder(order, function(orderDB){
-
-      /* var items = orderDB.orderItems.replace(/([a-zA-Z0-9]+?):/g, '"$1":');
-      items = items.replace(/'/g, '"'); */
-
       orderDB.orderItems = JSON.parse(orderDB.orderItems);
       orderDB.shippingAddress = JSON.parse(orderDB.shippingAddress);
-
       res.status(201).json(orderDB);
     })
-
-    //const createdOrder = await order.save();
   }
 });
 
@@ -52,14 +43,9 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @route GET /api/orders/:id
 // @access Private
 const getOrder = asyncHandler(async (req, res) => {
-  /* const order = await Order.findById(req.params.id).populate(
-    "user",
-    "name email"
-  ); */
-
   getOrderById(req.params.id, function(orderDB){
     if (orderDB) {
-      
+
       orderDB.orderItems = JSON.parse(orderDB.orderItems);
       orderDB.shippingAddress = JSON.parse(orderDB.shippingAddress);
 
