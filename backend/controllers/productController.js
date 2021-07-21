@@ -48,6 +48,35 @@ const getProducts = asyncHandler(async (req, res) => {
 
 });
 
+// @desc fetch single product by id
+// @route GET /api/products/:id
+// @access public
+const getProductById = asyncHandler(async (req, res) => {
+
+  const fbDb = fbAdmin.firestore();
+
+  console.log('Fetching items from Firestore'.cyan.underline.bold)
+
+  fbDb.collection("shop").doc("products").get().then(queryResult => {
+
+    var plainProductArray = queryResult.data().sampleProducts
+
+    console.log('Got items from Firestore'.cyan.underline.bold);
+
+    for (const property in plainProductArray) {
+      if(req.params.id == plainProductArray[property]._id){
+        console.log(`Required item = ${plainProductArray[property].name}`)
+        res.json(plainProductArray[property])
+      }
+    }
+
+  }).catch(function (error) {
+    console.error('Error fetching document: ', error);
+  });
+});
+
+
+
 // ================= End import from Firebase =========================
 
 
@@ -67,15 +96,15 @@ const getProducts = asyncHandler(async (req, res) => {
 // @desc fetch single product by id
 // @route GET /api/products/:id
 // @access public
-const getProductById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
+// const getProductById = asyncHandler(async (req, res) => {
+//   const product = await Product.findById(req.params.id);
 
-  if (product) {
-    res.json(product);
-  } else {
-    res.status(404);
-    throw new Error("Product not found");
-  }
-});
+//   if (product) {
+//     res.json(product);
+//   } else {
+//     res.status(404);
+//     throw new Error("Product not found");
+//   }
+// });
 
 export { getProducts, getProductById };
